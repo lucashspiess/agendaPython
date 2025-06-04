@@ -6,3 +6,8 @@ from contact import models
 class ContactAdmin(admin.ModelAdmin):
     list_display = 'id','first_name', 'last_name', 'created_date',
     ordering = '-id',
+
+@admin.register(models.Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = 'name',
+    ordering = '-id',
