@@ -2,12 +2,18 @@ from django.shortcuts import render, get_object_or_404, redirect
 from contact.models import Contact
 from django.http import Http404
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 # Create your views here.
 def index(request):
     contact = Contact.objects.filter(show=True).order_by('-id')
+
+    paginator = Paginator(contact, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'contacts': contact,
+        'page_obj': page_obj,
         'title': 'Contatos'
     }
 
@@ -24,12 +30,16 @@ def search(request):
         Q(first_name__icontains=search_value) | Q(last_name__icontains=search_value) |
         Q(phone__icontains=search_value) | Q(email__icontains=search_value)
         ).order_by('-id')
+    
+    paginator = Paginator(contact, 10)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
     if search_value == '':
         return redirect('contact:index')
     
     context = {
-        'contacts': contact,
+        'page_obj': page_obj,
         'title': 'Contatos'
     }
 
