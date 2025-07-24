@@ -4,8 +4,12 @@
         <h1 class="single-contact-name">
             {{ contact.first_name }} {{contact.last_name}}
         </h1>
+        
+        {% if contact.picture %}
+            <img src="{{ contact.picture.url }}" height="300px" style="border-radius: 5px">
+        {% endif %}
 
-        <img src="{{ contact.picture }}">
+
         <p><b>Category:</b> {{ contact.category }} </p>
         <p><b>E-mail:</b> {{ contact.email }} </p>
         <p><b>Phone:</b> {{ contact.phone }} </p>
@@ -13,8 +17,16 @@
         <div class="contact-links">
             <a class="btn btn-link" href="{% url 'contact:update' contact.id %}">Update</a>
 
-            <form action="" method="POST">
-                <button class="btn btn-link btn-delete" type="submit">Delete</button>
+            <form action="{% url 'contact:delete' contact.id %}" method="POST">
+                {% csrf_token %}
+
+                {% if confirmation == 'no' %}
+                    <input type="hidden" name="confirmation" value="yes">
+                    <button class="btn btn-link btn-delete" type="submit">Confirmar</button>
+                {% else %}
+                    <button class="btn btn-link btn-delete" type="submit">Delete</button>
+                {% endif %}
+
             </form>
         </div>
     </div>

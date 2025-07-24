@@ -88,6 +88,13 @@ svg {
   flex-flow: row wrap;
 }
 
+.logout {
+  list-style: none;
+  display: flex;
+  justify-content: right;
+  flex-flow: row wrap;
+}
+
 .menu-link {
   display: block;
   padding: var(--spacing);
@@ -330,9 +337,5 @@ svg {
 }
 
 .btn-delete {
-  background: tomato;
-}
-
-.teste{
   background: tomato;
 }
